@@ -2,7 +2,6 @@ from tflite_runtime.interpreter import Interpreter
 from PIL import Image
 import numpy as np
 import time
-#import picamera
 import tkinter as tk
 from tkinter import *
 from tkinter.font import families
@@ -19,22 +18,19 @@ class Page4(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        controller.geometry("650x500")
 
         #Create a frame
-        frame = LabelFrame(parent, padx=50, pady=50, bg="#FBF6F3")
+        frame = LabelFrame(self, padx=50, pady=50)
         frame.pack(padx=10, pady=10)
 
         #=================================================Functions=============================================================================
         #Restart Cleaning
         def ReStart():
             controller.show_frame("Page2")
-            parent.destroy()
 
         #Proceed to Sterilise
         def Sterilise():
             controller.show_frame("Page5")
-            parent.destroy()
 
         def load_labels(path): # Read the labels from the text file as a Python list.
             with open(path, 'r') as f:
@@ -59,6 +55,8 @@ class Page4(tk.Frame):
             return [(i, output[i]) for i in ordered[:top_k]][0]
         #=================================================Functions END=============================================================================
 
+        self.configure(background='#FBF6F3')
+
         #Create a label for cleaning title
         cleaningFont = font.Font(family = 'Kristen ITC', size=25, weight='bold')
         label1 = Label(frame, text = "Cleaning Completed...", bg="#FBF6F3")
@@ -66,20 +64,11 @@ class Page4(tk.Frame):
         label1.pack(padx=50, pady=5, anchor=W)
 
         #=================================================ML_Check=============================================================================
-        #Capture an image
-        '''
-        with picamera.PiCamera() as camera:
-            camera.resolution = (1024, 768)
-            camera.start_preview()
-            time.sleep(2)
-            camera.capture('CaptureSyringe.jpg')
-            '''
-
         #Create an image space
-        MLimage = Image.open("testSyringe3.jpg").resize((224, 224), Image.ANTIALIAS) #PIL object
-        #Ensure Image not garbage collected by Python
-        self.ML_img = ImageTk.PhotoImage(MLimage)
-        Label2 = Label(frame, image=self.ML_img)
+        MLimage = Image.open("testSyringe3.jpg")
+        MLimage = MLimage.resize((224, 224), Image.ANTIALIAS)
+        ML_img = ImageTk.PhotoImage(MLimage)
+        Label2 = Label(frame, image=ML_img)
         Label2.pack()
         
         data_folder = "./"
@@ -89,6 +78,7 @@ class Page4(tk.Frame):
 
         interpreter = Interpreter(model_path)
         print("Model Loaded Successfully.")
+
 
         interpreter.allocate_tensors()
         _, height, width, _ = interpreter.get_input_details()[0]['shape']
@@ -110,6 +100,7 @@ class Page4(tk.Frame):
         # Return the classification label of the image.
         classification_label = labels[label_id]
         print("Image Label is :", classification_label, ", with Accuracy :", prob, "%.")
+        
 
         #Status Label
         StatusFont = font.Font(family = 'Kristen ITC', size=20, weight='bold')

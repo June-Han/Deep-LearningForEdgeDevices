@@ -15,28 +15,23 @@ class Page1(tk.Frame):
         self.controller = controller
         #Function to Exit the program
         def ExitApp():
-            self.quit()
-
-        def NextPage():
-            controller.show_frame("Page2")
-            parent.destroy()
+            controller.quit()
 
         #Create a frame
-        frame = LabelFrame(parent, padx=50, pady=50, bg="#FBF6F3")
+        frame = LabelFrame(self, padx=50, pady=50)
         frame.pack(padx=10, pady=10)
 
-        #self.configure(background='#FBF6F3')
+        self.configure(background='#FBF6F3')
 
         #Create a label
         welcomeFont = font.Font(family = 'Kristen ITC', size=50, weight='bold')
         label1 = Label(frame, text = "Welcome", bg="#FBF6F3")
-        #label1 = Label(frame, text = "Welcome")
         label1['font'] = welcomeFont
         label1.pack(padx=50, pady=5, anchor=CENTER)
 
         #Create Start Button
         StartButtonFont = font.Font(family = 'Kristen ITC', size=25, weight='bold')
-        StartButton = Button(frame, text="START WASH", padx = 60, pady = 10, fg="white", bg="#72C64B", command=lambda: NextPage())
+        StartButton = Button(frame, text="START WASH", padx = 60, pady = 10, fg="white", bg="#72C64B", command=lambda: controller.show_frame("Page2"))
         StartButton['font'] = StartButtonFont
         StartButton.pack(padx=50, pady=5, anchor=CENTER)
 

@@ -4,23 +4,17 @@ from tkinter.font import families
 import tkinter.font as font
 
 '''
-* Sterilisation Countdown Timing before Retrieving Syringes
-* Page 5 of the GUI
+* Washing Countdown Timing before drying
+* Page 2 of the GUI
 * @Author June Han
 '''
-
-class Page5(tk.Frame):
+class Page2(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-
         #Create a frame
-        frame = LabelFrame(parent, padx=50, pady=50, bg="#FBF6F3")
+        frame = LabelFrame(self, padx=50, pady=50)
         frame.pack(padx=10, pady=10)
-
-        def StopDrying():
-            controller.show_frame("Page1")
-            parent.destroy()
 
         #Create a function for countdown
         def countdown(seconds):
@@ -31,23 +25,22 @@ class Page5(tk.Frame):
             seconds -=1
             #When second is 0, it will be -1.
             if (seconds == -1):
-                controller.show_frame("Page6")
-                parent.destroy()
+                controller.show_frame("Page3")
             else:
                 # call function again after 1000ms (1s)
                 frame.after(1000,lambda: countdown(seconds))
 
-        #self.configure(background='#FBF6F3')
+        self.configure(background='#FBF6F3')
 
-        #Create a label for drying title
-        SteriliseFont = font.Font(family = 'Kristen ITC', size=25, weight='bold')
-        label1 = Label(frame, text = "Sterilizing...", bg="#FBF6F3")
-        label1['font'] = SteriliseFont
+        #Create a label for washing title
+        washingFont = font.Font(family = 'Kristen ITC', size=25, weight='bold')
+        label1 = Label(self, text = "Washing...", bg="#FBF6F3")
+        label1['font'] = washingFont
         label1.pack(padx=50, pady=5, anchor=W)
 
         #Countdown Label
         countdownFont = font.Font(family = 'Kristen ITC', size=20, weight='bold')
-        timeLabel = Label(frame, text=0, padx = 140, pady = 10, bg="#FBF6F3", relief=SUNKEN)
+        timeLabel = Label(self, text=0, padx = 140, pady = 10, bg="#FBF6F3", relief=SUNKEN)
         timeLabel['font'] = countdownFont
         timeLabel.pack(padx=50, pady=5, anchor=CENTER)
         countdown(5)
@@ -55,6 +48,7 @@ class Page5(tk.Frame):
 
         # Create Exit Button
         ExitButtonFont = font.Font(family = 'Kristen ITC', size=25, weight='bold')
-        ExitButton = Button(frame, text="STOP", padx = 140, pady = 10, fg="white", bg="red", command= lambda: StopDrying())
+        ExitButton = Button(self, text="STOP", padx = 140, pady = 10, fg="white", bg="red", command= lambda: controller.show_frame("Page1"))
+        #ExitButton = Button(self, text="STOP", padx = 140, pady = 10, fg="white", bg="red", command= lambda: controller.show_frame("Page3"))
         ExitButton['font'] = ExitButtonFont
         ExitButton.pack(padx=50, pady=5, anchor=CENTER)

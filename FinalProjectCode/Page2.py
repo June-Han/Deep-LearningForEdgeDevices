@@ -13,7 +13,7 @@ class Page2(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
         #Create a frame
-        frame = LabelFrame(self, padx=50, pady=50)
+        frame = LabelFrame(parent, padx=50, pady=50, bg="#FBF6F3")
         frame.pack(padx=10, pady=10)
 
         #Create a function for countdown
@@ -26,21 +26,26 @@ class Page2(tk.Frame):
             #When second is 0, it will be -1.
             if (seconds == -1):
                 controller.show_frame("Page3")
+                parent.destroy()
             else:
                 # call function again after 1000ms (1s)
                 frame.after(1000,lambda: countdown(seconds))
+        
+        def StopWashing():
+            controller.show_frame("Page1")
+            parent.destroy()
 
-        self.configure(background='#FBF6F3')
+        #self.configure(background='#FBF6F3')
 
         #Create a label for washing title
         washingFont = font.Font(family = 'Kristen ITC', size=25, weight='bold')
-        label1 = Label(self, text = "Washing...", bg="#FBF6F3")
+        label1 = Label(frame, text = "Washing...", bg="#FBF6F3")
         label1['font'] = washingFont
         label1.pack(padx=50, pady=5, anchor=W)
 
         #Countdown Label
         countdownFont = font.Font(family = 'Kristen ITC', size=20, weight='bold')
-        timeLabel = Label(self, text=0, padx = 140, pady = 10, bg="#FBF6F3", relief=SUNKEN)
+        timeLabel = Label(frame, text=0, padx = 140, pady = 10, bg="#FBF6F3", relief=SUNKEN)
         timeLabel['font'] = countdownFont
         timeLabel.pack(padx=50, pady=5, anchor=CENTER)
         countdown(5)
@@ -48,7 +53,6 @@ class Page2(tk.Frame):
 
         # Create Exit Button
         ExitButtonFont = font.Font(family = 'Kristen ITC', size=25, weight='bold')
-        ExitButton = Button(self, text="STOP", padx = 140, pady = 10, fg="white", bg="red", command= lambda: controller.show_frame("Page1"))
-        #ExitButton = Button(self, text="STOP", padx = 140, pady = 10, fg="white", bg="red", command= lambda: controller.show_frame("Page3"))
+        ExitButton = Button(frame, text="STOP", padx = 140, pady = 10, fg="white", bg="red", command= lambda: StopWashing())
         ExitButton['font'] = ExitButtonFont
         ExitButton.pack(padx=50, pady=5, anchor=CENTER)

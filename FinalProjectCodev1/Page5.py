@@ -15,12 +15,11 @@ class Page5(tk.Frame):
         self.controller = controller
 
         #Create a frame
-        frame = LabelFrame(parent, padx=50, pady=50, bg="#FBF6F3")
+        frame = LabelFrame(self, padx=50, pady=50)
         frame.pack(padx=10, pady=10)
 
         def StopDrying():
             controller.show_frame("Page1")
-            parent.destroy()
 
         #Create a function for countdown
         def countdown(seconds):
@@ -32,12 +31,11 @@ class Page5(tk.Frame):
             #When second is 0, it will be -1.
             if (seconds == -1):
                 controller.show_frame("Page6")
-                parent.destroy()
             else:
                 # call function again after 1000ms (1s)
                 frame.after(1000,lambda: countdown(seconds))
 
-        #self.configure(background='#FBF6F3')
+        self.configure(background='#FBF6F3')
 
         #Create a label for drying title
         SteriliseFont = font.Font(family = 'Kristen ITC', size=25, weight='bold')

@@ -15,15 +15,14 @@ class Page6(tk.Frame):
         self.controller = controller
 
         #Create a frame
-        frame = LabelFrame(parent, padx=50, pady=50, bg="#FBF6F3")
+        frame = LabelFrame(self, padx=50, pady=50)
         frame.pack(padx=10, pady=10)
 
         def Retrieve():
             controller.show_frame("Page1")
-            parent.destroy()
 
         #Set window background
-        #self.configure(background='#FBF6F3')
+        self.configure(background='#FBF6F3')
 
         #Create a label for drying title
         SteriliseFont = font.Font(family = 'Kristen ITC', size=25, weight='bold')
