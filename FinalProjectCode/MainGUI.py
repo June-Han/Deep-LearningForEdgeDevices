@@ -18,7 +18,7 @@ class SyringeApp(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
         self.title("Syringe Washer UI")
-        self.iconbitmap("./syringe.ico")
+        #self.iconbitmap("./syringe.ico")
 
         self.title_font = font.Font(family='Kristen ITC', weight="bold")
 

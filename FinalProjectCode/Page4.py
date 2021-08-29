@@ -66,17 +66,25 @@ class Page4(tk.Frame):
         label1.pack(padx=50, pady=5, anchor=W)
 
         #=================================================ML_Check=============================================================================
-        #Capture an image
         '''
+        #Capture an image
         with picamera.PiCamera() as camera:
             camera.resolution = (1024, 768)
             camera.start_preview()
+            # Wait for the automatic gain control to settle
             time.sleep(2)
+            # Now fix the values
+            camera.shutter_speed = camera.exposure_speed
+            camera.exposure_mode = 'off'
+            g = camera.awb_gains
+            camera.awb_mode = 'off'
+            camera.awb_gains = g
+            camera.vflip = False
             camera.capture('CaptureSyringe.jpg')
             '''
 
         #Create an image space
-        MLimage = Image.open("testSyringe3.jpg").resize((224, 224), Image.ANTIALIAS) #PIL object
+        MLimage = Image.open("CaptureSyringe.jpg").resize((224, 224), Image.ANTIALIAS) #PIL object
         #Ensure Image not garbage collected by Python
         self.ML_img = ImageTk.PhotoImage(MLimage)
         Label2 = Label(frame, image=self.ML_img)
@@ -84,7 +92,7 @@ class Page4(tk.Frame):
         
         data_folder = "./"
 
-        model_path = data_folder + "mobilenet_v2_1.0_224_quant.tflite"
+        model_path = data_folder + "mobilenet_v2_1.0_224_quant_SyringeV2.tflite"
         label_path = data_folder + "syringe_labels.txt"
 
         interpreter = Interpreter(model_path)
@@ -95,7 +103,7 @@ class Page4(tk.Frame):
         print("Image Shape (", width, ",", height, ")")
 
         # Load an image to be classified.
-        image = Image.open(data_folder + "testSyringe3.jpg").convert('RGB').resize((width, height))
+        image = Image.open(data_folder + "CaptureSyringe.jpg").convert('RGB').resize((width, height))
 
         # Classify the image.
         time1 = time.time()
