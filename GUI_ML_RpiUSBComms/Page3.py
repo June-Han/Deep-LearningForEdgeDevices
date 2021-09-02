@@ -18,11 +18,6 @@ class Page3(tk.Frame):
         frame.pack(padx=10, pady=10)
 
         def StopDrying():
-            #For stop button to stop the sensors
-            controller.ser.write(b"Abort\n")
-            line = controller.ser.readline().decode('utf-8').rstrip()
-            print(line)
-
             controller.show_frame("Page1")
             parent.destroy()
 

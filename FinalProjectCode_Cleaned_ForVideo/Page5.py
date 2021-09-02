@@ -4,11 +4,12 @@ from tkinter.font import families
 import tkinter.font as font
 
 '''
-* Drying Countdown Timing before ML
-* Page 3 of the GUI
+* Sterilisation Countdown Timing before Retrieving Syringes
+* Page 5 of the GUI
 * @Author June Han
 '''
-class Page3(tk.Frame):
+
+class Page5(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
@@ -18,11 +19,6 @@ class Page3(tk.Frame):
         frame.pack(padx=10, pady=10)
 
         def StopDrying():
-            #For stop button to stop the sensors
-            controller.ser.write(b"Abort\n")
-            line = controller.ser.readline().decode('utf-8').rstrip()
-            print(line)
-
             controller.show_frame("Page1")
             parent.destroy()
 
@@ -35,16 +31,16 @@ class Page3(tk.Frame):
             seconds -=1
             #When second is 0, it will be -1.
             if (seconds == -1):
-                controller.show_frame("Page4")
+                controller.show_frame("Page6")
                 parent.destroy()
             else:
                 # call function again after 1000ms (1s)
                 frame.after(1000,lambda: countdown(seconds))
 
         #Create a label for drying title
-        dryingFont = font.Font(family = 'Kristen ITC', size=25, weight='bold')
-        label1 = Label(frame, text = "Drying...", bg="#FBF6F3")
-        label1['font'] = dryingFont
+        SteriliseFont = font.Font(family = 'Kristen ITC', size=25, weight='bold')
+        label1 = Label(frame, text = "Sterilizing...", bg="#FBF6F3")
+        label1['font'] = SteriliseFont
         label1.pack(padx=50, pady=5, anchor=W)
 
         #Countdown Label
@@ -52,7 +48,7 @@ class Page3(tk.Frame):
         timeLabel = Label(frame, text=0, padx = 140, pady = 10, bg="#FBF6F3", relief=SUNKEN)
         timeLabel['font'] = countdownFont
         timeLabel.pack(padx=50, pady=5, anchor=CENTER)
-        countdown(5)
+        countdown(20)
 
 
         # Create Exit Button

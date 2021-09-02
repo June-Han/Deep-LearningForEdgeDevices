@@ -13,7 +13,6 @@ class Page1(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-		
         #Function to Exit the program
         def ExitApp():
             self.quit()

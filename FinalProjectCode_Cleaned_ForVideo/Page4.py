@@ -2,7 +2,7 @@ from tflite_runtime.interpreter import Interpreter
 from PIL import Image
 import numpy as np
 import time
-import picamera
+#import picamera
 import tkinter as tk
 from tkinter import *
 from tkinter.font import families
@@ -25,6 +25,7 @@ class Page4(tk.Frame):
         frame = LabelFrame(parent, padx=50, pady=50, bg="#FBF6F3")
         frame.pack(padx=10, pady=10)
 
+        #=================================================Functions=============================================================================
         #Restart Cleaning
         def ReStart():
             controller.show_frame("Page2")
@@ -56,6 +57,7 @@ class Page4(tk.Frame):
 
             ordered = np.argpartition(-output, 1)
             return [(i, output[i]) for i in ordered[:top_k]][0]
+        #=================================================Functions END=============================================================================
 
         #Create a label for cleaning title
         cleaningFont = font.Font(family = 'Kristen ITC', size=25, weight='bold')
@@ -63,8 +65,9 @@ class Page4(tk.Frame):
         label1['font'] = cleaningFont
         label1.pack(padx=50, pady=5, anchor=W)
 
+        #=================================================ML_Check=============================================================================
         #Capture an image
-        with picamera.PiCamera() as camera:
+        '''with picamera.PiCamera() as camera:
             camera.resolution = (1024, 768)
             camera.start_preview()
             # Wait for the automatic gain control to settle
@@ -77,9 +80,9 @@ class Page4(tk.Frame):
             camera.awb_gains = g
             camera.vflip = False
             camera.capture('CaptureSyringe.jpg')
-
+        '''
         #Create an image space
-        MLimage = Image.open("CaptureSyringe.jpg").resize((224, 224), Image.ANTIALIAS) #PIL object
+        MLimage = Image.open("dry_syringe_220.jpg").resize((224, 224), Image.ANTIALIAS) #PIL object
         #Ensure Image not garbage collected by Python
         self.ML_img = ImageTk.PhotoImage(MLimage)
         Label2 = Label(frame, image=self.ML_img)
@@ -98,7 +101,7 @@ class Page4(tk.Frame):
         print("Image Shape (", width, ",", height, ")")
 
         # Load an image to be classified.
-        image = Image.open(data_folder + "CaptureSyringe.jpg").convert('RGB').resize((width, height))
+        image = Image.open(data_folder + "dry_syringe_220.jpg").convert('RGB').resize((width, height))
 
         # Classify the image.
         time1 = time.time()
@@ -119,6 +122,7 @@ class Page4(tk.Frame):
         StatusLabel = Label(frame, text=classification_label, padx = 140, pady = 10, bg="#FBF6F3", relief=SUNKEN)
         StatusLabel['font'] = StatusFont
         StatusLabel.pack(padx=50, pady=5, anchor=CENTER)
+        #=================================================ML_Check=============================================================================
 
         #Create Restart washing Button
         ReStartButtonFont = font.Font(family = 'Kristen ITC', size=25, weight='bold')

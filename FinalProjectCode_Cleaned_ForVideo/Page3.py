@@ -18,11 +18,6 @@ class Page3(tk.Frame):
         frame.pack(padx=10, pady=10)
 
         def StopDrying():
-            #For stop button to stop the sensors
-            controller.ser.write(b"Abort\n")
-            line = controller.ser.readline().decode('utf-8').rstrip()
-            print(line)
-
             controller.show_frame("Page1")
             parent.destroy()
 
@@ -52,7 +47,7 @@ class Page3(tk.Frame):
         timeLabel = Label(frame, text=0, padx = 140, pady = 10, bg="#FBF6F3", relief=SUNKEN)
         timeLabel['font'] = countdownFont
         timeLabel.pack(padx=50, pady=5, anchor=CENTER)
-        countdown(5)
+        countdown(17)
 
 
         # Create Exit Button

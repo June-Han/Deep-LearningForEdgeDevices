@@ -80,7 +80,6 @@ class Page4(tk.Frame):
 
         #Create an image space
         MLimage = Image.open("CaptureSyringe.jpg").resize((224, 224), Image.ANTIALIAS) #PIL object
-        #Ensure Image not garbage collected by Python
         self.ML_img = ImageTk.PhotoImage(MLimage)
         Label2 = Label(frame, image=self.ML_img)
         Label2.pack()

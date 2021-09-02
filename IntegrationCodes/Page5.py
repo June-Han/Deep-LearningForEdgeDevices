@@ -26,8 +26,8 @@ class Page5(tk.Frame):
 
         def StopDrying():
             #For stop button to stop the sensors
-            self.ser.write(b"Abort\n")
-            line = self.ser.readline().decode('utf-8').rstrip()
+            controller.ser.write(b"Abort\n")
+            line = controller.ser.readline().decode('utf-8').rstrip()
             print(line)
             
             controller.show_frame("Page1")

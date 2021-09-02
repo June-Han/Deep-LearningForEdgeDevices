@@ -4,27 +4,17 @@ from tkinter.font import families
 import tkinter.font as font
 
 '''
-* Drying Countdown Timing before ML
-* Page 3 of the GUI
+* Washing Countdown Timing before drying
+* Page 2 of the GUI
 * @Author June Han
 '''
-class Page3(tk.Frame):
+class Page2(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-
         #Create a frame
         frame = LabelFrame(parent, padx=50, pady=50, bg="#FBF6F3")
         frame.pack(padx=10, pady=10)
-
-        def StopDrying():
-            #For stop button to stop the sensors
-            controller.ser.write(b"Abort\n")
-            line = controller.ser.readline().decode('utf-8').rstrip()
-            print(line)
-
-            controller.show_frame("Page1")
-            parent.destroy()
 
         #Create a function for countdown
         def countdown(seconds):
@@ -35,16 +25,20 @@ class Page3(tk.Frame):
             seconds -=1
             #When second is 0, it will be -1.
             if (seconds == -1):
-                controller.show_frame("Page4")
+                controller.show_frame("Page3")
                 parent.destroy()
             else:
                 # call function again after 1000ms (1s)
                 frame.after(1000,lambda: countdown(seconds))
+        
+        def StopWashing():
+            controller.show_frame("Page1")
+            parent.destroy()
 
-        #Create a label for drying title
-        dryingFont = font.Font(family = 'Kristen ITC', size=25, weight='bold')
-        label1 = Label(frame, text = "Drying...", bg="#FBF6F3")
-        label1['font'] = dryingFont
+        #Create a label for washing title
+        washingFont = font.Font(family = 'Kristen ITC', size=25, weight='bold')
+        label1 = Label(frame, text = "Washing...", bg="#FBF6F3")
+        label1['font'] = washingFont
         label1.pack(padx=50, pady=5, anchor=W)
 
         #Countdown Label
@@ -57,6 +51,6 @@ class Page3(tk.Frame):
 
         # Create Exit Button
         ExitButtonFont = font.Font(family = 'Kristen ITC', size=25, weight='bold')
-        ExitButton = Button(frame, text="STOP", padx = 140, pady = 10, fg="white", bg="red", command= lambda: StopDrying())
+        ExitButton = Button(frame, text="STOP", padx = 140, pady = 10, fg="white", bg="red", command= lambda: StopWashing())
         ExitButton['font'] = ExitButtonFont
         ExitButton.pack(padx=50, pady=5, anchor=CENTER)
